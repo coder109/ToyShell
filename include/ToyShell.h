@@ -9,12 +9,12 @@
 
 // Status Code
 #define SUCCESS 1
-#define INPUT_EOF 0
 #define ERR_EXPR_TOO_LONG -1
 #define ERR_FAILED_TO_EXEC -2
 #define ERR_FAILED_TO_CHDIR -3
 #define ERR_NO_SUCH_DIR -4
 #define ERR_WRONG_PARAMETER_FORMAT -5
+#define INPUT_EOF -6
 
 int ReadLine(char* buffer);
 

@@ -53,8 +53,7 @@ int ExecuteCommand(char **token_list) {
   int status = 0;
   if(token_list[0] == NULL) {
     return SUCCESS;
-  } else {
-    if(strcmp(token_list[0], "cd") == 0) {
+  } else {if(strcmp(token_list[0], "cd") == 0) {
       return Command_cd(token_list);
     } else if(strcmp(token_list[0], "exit") == 0) {
       return Command_exit(token_list);
