@@ -1,5 +1,6 @@
 #include "../include/utils.h"
 #include <stdlib.h>
+#include "../include/ToyShell.h"
 
 void* SafeMalloc(size_t malloc_size) {
   void* malloc_memory = malloc(sizeof(malloc_size));
@@ -17,4 +18,10 @@ void* SafeRealloc(void* pointer, size_t malloc_size) {
     exit(-1);
   }
   return realloc_memory;
+}
+
+int FlushStdin() {
+  int c;
+  while((c = getchar()) != '\n'); 
+  return SUCCESS;
 }

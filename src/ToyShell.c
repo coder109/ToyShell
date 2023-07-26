@@ -5,15 +5,13 @@
 #include <string.h>
 #include <unistd.h>
 #include <sys/wait.h>
-#include <sys/types.h>
-#include <dirent.h>
 
 int ReadLine(char* buffer) {
   int buffer_pivot = 0;
   int buffer_length = 0;
 
   while(1) {
-    if(buffer_pivot == BUFFER_SIZE) {
+    if(buffer_pivot == BUFFER_SIZE - 1) {
       printf("The expression is too long to process.\n");
       return ERR_EXPR_TOO_LONG;
     }

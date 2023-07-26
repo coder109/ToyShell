@@ -9,4 +9,5 @@ void* SafeMalloc(size_t malloc_size);
 
 void* SafeRealloc(void* pointer, size_t malloc_size);
 
+int FlushStdin();
 #endif
