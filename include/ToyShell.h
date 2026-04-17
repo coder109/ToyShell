@@ -9,6 +9,7 @@
 
 // Status Code
 #define SUCCESS 1
+#define SHELL_EXIT 2
 #define ERR_EXPR_TOO_LONG -1
 #define ERR_FAILED_TO_EXEC -2
 #define ERR_FAILED_TO_CHDIR -3

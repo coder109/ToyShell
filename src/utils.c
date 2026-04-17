@@ -3,7 +3,7 @@
 #include "../include/ToyShell.h"
 
 void* SafeMalloc(size_t malloc_size) {
-  void* malloc_memory = malloc(sizeof(malloc_size));
+  void* malloc_memory = malloc(malloc_size);
   if(!malloc_memory && malloc_size) {
     printf("Failed to malloc memory!\n");
     exit(-1);
@@ -20,8 +20,8 @@ void* SafeRealloc(void* pointer, size_t malloc_size) {
   return realloc_memory;
 }
 
-int FlushStdin() {
+int FlushStdin(void) {
   int c;
-  while((c = getchar()) != '\n'); 
+  while((c = getchar()) != '\n' && c != EOF);
   return SUCCESS;
 }

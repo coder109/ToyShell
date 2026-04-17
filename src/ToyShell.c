@@ -32,7 +32,7 @@ int ReadLine(char* buffer) {
 }
 
 char** ProcessLine(char* command) {
-  char** command_tokens = (char**)SafeMalloc(sizeof(char) * BUFFER_SIZE);
+  char** command_tokens = (char**)SafeMalloc(sizeof(char*) * BUFFER_SIZE);
   char* token;
   int command_tokens_index = 0;
 
@@ -51,7 +51,8 @@ int ExecuteCommand(char **token_list) {
   int status = 0;
   if(token_list[0] == NULL) {
     return SUCCESS;
-  } else {if(strcmp(token_list[0], "cd") == 0) {
+  } else {
+    if(strcmp(token_list[0], "cd") == 0) {
       return Command_cd(token_list);
     } else if(strcmp(token_list[0], "exit") == 0) {
       return Command_exit(token_list);
@@ -61,31 +62,40 @@ int ExecuteCommand(char **token_list) {
   if(command_pid == 0) {
     if(execvp(token_list[0], token_list) == -1) {
       perror("Execute Error");
-      exit(0);
-      return ERR_FAILED_TO_EXEC;
+      exit(EXIT_FAILURE);
     }
   } else if(command_pid > 0) {
     wait(&status);
   } else {
     perror("Fork Error");
-    exit(0);
+    return ERR_FAILED_TO_EXEC;
   }
-  free(token_list);
   return SUCCESS;
 }
 
 int Command_cd(char **args) {
+  const char* target_dir = NULL;
   if(args[1] == NULL) {
-    printf("Change to home dir\n");
-    chdir("~");
-  } else {
-    if(chdir(args[1]) != 0) {
-      printf("Failed to change dir\n");
+    target_dir = getenv("HOME");
+    if(target_dir == NULL) {
+      printf("Failed to find home dir\n");
       return ERR_FAILED_TO_CHDIR;
     }
-    printf("Changed to dir %s\n", args[1]);
+    printf("Change to home dir\n");
+  } else {
+    target_dir = args[1];
   }
+
+  if(chdir(target_dir) != 0) {
+    printf("Failed to change dir\n");
+    return ERR_FAILED_TO_CHDIR;
+  }
+
+  printf("Changed to dir %s\n", target_dir);
   return SUCCESS;
 }
 
-int Command_exit(char** args) { return SUCCESS; }
+int Command_exit(char** args) {
+  (void)args;
+  return SHELL_EXIT;
+}
